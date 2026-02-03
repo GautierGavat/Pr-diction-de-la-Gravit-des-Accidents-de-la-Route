@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environnement & Git
+.git/
+.gitignore
+.env
+
+# Données locales (si volumineuses)
+Datasets/
+data_output/
+
+# Docker
+Dockerfile
+docker-compose.yml

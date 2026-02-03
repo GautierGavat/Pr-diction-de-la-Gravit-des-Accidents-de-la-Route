@@ -60,7 +60,7 @@ if submitted:
     
     try:
         with st.spinner('Calcul du risque en cours...'):
-            response = requests.post("http://127.0.0.1:8000/predict", json=payload)
+            response = requests.post("http://accident_api:8000/predict", json=payload)
             result = response.json()
             
             label = result['label']

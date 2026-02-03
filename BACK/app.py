@@ -50,7 +50,8 @@ def predict(data: Dict[str, float]):
         scaled_data = scaler.transform(input_df)
         
         # 4. Prédiction
-        pred_num = int(model.predict(scaled_data)[0])
+        scaled_df = pd.DataFrame(scaled_data, columns=features_cols)
+        pred_num = int(model.predict(scaled_df)[0])
         
         return {
             "prediction": pred_num,

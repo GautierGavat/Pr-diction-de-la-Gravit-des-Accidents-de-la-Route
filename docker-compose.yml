@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: BACK/Dockerfile
+    image: gautierga/accident-app-2:v1
+    container_name: accident_api
+    ports:
+      - "8000:8000"
+    networks:
+      - accident_network
+    command: uvicorn BACK.app:app --host 0.0.0.0 --port 8000
+  interface:
+    image: gautierga/accident-app-2:v1
+    container_name: accident_interface
+    ports:
+      - "8501:8501"
+    networks:
+      - accident_network 
+    command: streamlit run Front/interface.py --server.address 0.0.0.0
+    depends_on:
+      - api
+    
+
+networks:
+  accident_network:
+    driver: bridge
