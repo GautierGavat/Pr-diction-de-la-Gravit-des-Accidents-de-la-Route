@@ -10,7 +10,6 @@ En tant que **Data Engineer**, ma mission a été de transformer une application
 ### Objectifs atteints :
 * **Environnement Isolé** : Utilisation d'images Python Slim.
 * **Orchestration** : Communication fluide entre l'API (Backend) et Streamlit (Frontend).
-* **Fiabilité** : Mise en place de Healthchecks pour garantir l'ordre de démarrage des services.
 * **Distribution** : Image versionnée et disponible sur Docker Hub.
 
 ---
@@ -26,7 +25,7 @@ En tant que **Data Engineer**, ma mission a été de transformer une application
 │   └── interface.py        # Interface utilisateur Streamlit
 ├── docker-compose.yml      # Orchestration des conteneurs
 ├── requirements.txt        # Dépendances communes
-└── .env                    # Configuration des variables
+
 ```
 
 ## 🚀 Installation et Démarrage
@@ -37,19 +36,43 @@ Avant de commencer, assurez-vous d’avoir installé sur votre machine :
 
 - Docker Compose
 
-## 🐳 Déploiement de l’Application
 
-Option 1 : Déploiement via Docker Hub (Production)
+Pas besoin de cloner tout le projet : Créez simplement un fichier **docker-compose.yml**
 
-Pour lancer l’application sans cloner le code source, utilisez directement l’image distante :
 
-docker-compose up -d
+```
+services:
+  api:
+    build:
+      context: .
+      dockerfile: BACK/Dockerfile
+    image: gautierga/accident-app-2:v1
+    container_name: accident_api
+    ports:
+      - "8000:8000"
+    networks:
+      - accident_network
+    command: uvicorn BACK.app:app --host 0.0.0.0 --port 8000
+  interface:
+    image: gautierga/accident-app-2:v1
+    container_name: accident_interface
+    ports:
+      - "8501:8501"
+    networks:
+      - accident_network 
+    command: streamlit run Front/interface.py --server.address 0.0.0.0
+    depends_on:
+      - api
+    
 
-## Option 2 : Build Local (Développement)
+networks:
+  accident_network:
+    driver: bridge
 
-Pour modifier le code source et reconstruire l’image localement :
+```
 
-docker-compose up --build
+Ensuite dans votre terminal, dans le dossier ou se trouver le fichier .yaml : exécutez la commande ```docker compose up```
+
 
 ## 🔗 Accès aux Services
 
@@ -71,28 +94,25 @@ Une fois les conteneurs démarrés, les services sont accessibles aux adresses s
 L’image Docker est construite à partir de python:3.13-slim et inclut :
 libgomp1
 Requis pour l’exécution du modèle LightGBM.
-curl
-Utilisé par Docker pour effectuer les healthchecks.
 
-## Sécurité
-L’application s’exécute avec l’utilisateur non-privilégié cableXLR, conformément aux bonnes pratiques de production.
 
 ## ⚙️ Orchestration (Docker Compose)
 
 Le fichier docker-compose.yml définit deux services :
 
 - l'Api
+  
 Exposé sur le port 8000
 
 Fournit le modèle de prédiction
 
-Inclut un healthcheck sur l’endpoint /health
 
 - L'interface
 
 Dépend du service api
 
 Communique avec le backend via l’URL interne :
+
 http://api:8000
 
 ## 📊 Utilisation de l’API
@@ -100,11 +120,11 @@ http://api:8000
 L’API accepte des requêtes POST sur l’endpoint /predict avec un payload JSON.
 
 📥 Exemple de requête
-{
+```{
   "age": 25,
   "vitesse": 50,
   "meteo_soleil": 1
-}
+}```
 
 ## 📤 Réponse attendue
 
