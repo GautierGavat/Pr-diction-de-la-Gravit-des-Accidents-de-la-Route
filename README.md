@@ -87,15 +87,6 @@ Une fois les conteneurs démarrés, les services sont accessibles aux adresses s
 ## Endpoint de vérification de santé :
 👉 http://localhost:8000/health
 
-🛠️ Détails Techniques
-🐍 Dockerfile
-
-
-L’image Docker est construite à partir de python:3.13-slim et inclut :
-libgomp1
-Requis pour l’exécution du modèle LightGBM.
-
-
 ## ⚙️ Orchestration (Docker Compose)
 
 Le fichier docker-compose.yml définit deux services :
