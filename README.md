@@ -34,9 +34,6 @@ Avant de commencer, assurez-vous d’avoir installé sur votre machine :
 
 - Docker
 
-- Docker Compose
-
-
 Pas besoin de cloner tout le projet : Créez simplement un fichier **docker-compose.yml**
 
 
