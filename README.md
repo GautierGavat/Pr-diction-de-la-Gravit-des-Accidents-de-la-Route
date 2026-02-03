@@ -1,19 +1,29 @@
-# Prédiction-de-la-Gravité-des-Accidents-de-la-Route
+# 🛣️ Road Accident Severity Predictor
 
-Ce projet propose une solution complète de prédiction de la gravité des accidents de la route en France, basée sur un modèle de Machine Learning (LightGBM). L'application est entièrement conteneurisée pour garantir un déploiement reproductible et scalable.
+[![Docker Hub](https://img.shields.io/badge/DockerHub-Image-blue?logo=docker)](https://hub.docker.com/r/gautierga/accident-app-2)
+[![Python](https://img.shields.io/badge/Python-3.13-yellow?logo=python)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-green?logo=fastapi)](https://fastapi.tiangolo.com/)
 
-##  Architecture Technique
+## 🎯 Contexte du Projet
+En tant que **Data Engineer**, ma mission a été de transformer une application de Machine Learning locale en une infrastructure conteneurisée robuste. Ce projet résout les problèmes d'incompatibilité de versions et garantit un déploiement "en un clic" grâce à Docker.
 
-L'infrastructure repose sur deux services principaux orchestrés par Docker :
-- **Backend (API)** : Développé avec FastAPI, il charge le modèle `model_lgb.pkl` et expose un endpoint de prédiction.
-- **Frontend (Interface)** : Développé avec Streamlit, il offre une interface utilisateur conviviale pour saisir les données et visualiser les résultats.
-
-
+### Objectifs atteints :
+* **Environnement Isolé** : Utilisation d'images Python Slim.
+* **Orchestration** : Communication fluide entre l'API (Backend) et Streamlit (Frontend).
+* **Fiabilité** : Mise en place de Healthchecks pour garantir l'ordre de démarrage des services.
+* **Distribution** : Image versionnée et disponible sur Docker Hub.
 
 ---
 
-##  Installation et Déploiement
-
-### Prérequis
-- Docker installé sur votre machine
-- Docker Compose
+## 🏗️ Structure du Projet
+```text
+.
+├── BACK/
+│   ├── app.py              # Serveur FastAPI
+│   ├── Dockerfile          # Configuration de l'image
+│   └── Modèles&Notebooks/  # Modèle LightGBM (.pkl)
+├── Front/
+│   └── interface.py        # Interface utilisateur Streamlit
+├── docker-compose.yml      # Orchestration des conteneurs
+├── requirements.txt        # Dépendances communes
+└── .env                    # Configuration des variables
