@@ -112,9 +112,9 @@ L’API accepte des requêtes POST sur l’endpoint /predict avec un payload JSO
 
 📥 Exemple de requête
 ```{
-  "age": 25,
-  "vitesse": 50,
-  "meteo_soleil": 1
+  "âge": 25,
+  "vitesse Maximale(vma)": 50,
+  "Catégorie de route(catr)": autoroute
 }```
 
 ## 📤 Réponse attendue
